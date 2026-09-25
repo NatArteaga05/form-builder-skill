@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Perform basic deterministic checks on a React JSX form component."""
+"""Realiza comprobaciones deterministas básicas de un formulario React JSX."""
 
 import re
 import sys
@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 def find_elements(source, tag):
-    """Return opening JSX tags for the requested element."""
+    """Devuelve las etiquetas JSX de apertura del elemento solicitado."""
     return re.findall(rf"<{tag}\b[^>]*>", source, flags=re.IGNORECASE | re.DOTALL)
 
 
@@ -32,9 +32,9 @@ def validate(path):
     try:
         source = path.read_text(encoding="utf-8")
     except (OSError, UnicodeError) as error:
-        print("Form validation\n---------------")
-        print(f"[FAIL] Could not read '{path}': {error}")
-        print("\nValidation failed.")
+        print("Validación del formulario\n-------------------------")
+        print(f"[FAIL] No se pudo leer '{path}': {error}")
+        print("\nValidación fallida.")
         return 1
 
     forms = find_elements(source, "form")
@@ -47,31 +47,31 @@ def validate(path):
         if (value := get_attribute(label, "htmlFor")) is not None
     }
 
-    print("Form validation\n---------------")
+    print("Validación del formulario\n-------------------------")
     results = []
 
     has_form = bool(forms)
-    results.append(report("Form element detected", has_form))
+    results.append(report("Elemento form detectado", has_form))
 
     has_submit = any(
         (get_attribute(button, "type") or "").lower() == "submit"
         for button in buttons
     )
-    results.append(report("Submit button detected", has_submit))
+    results.append(report("Botón submit detectado", has_submit))
 
     has_inputs = bool(inputs)
-    results.append(report("Input fields detected", has_inputs))
+    results.append(report("Campos input detectados", has_inputs))
 
     ids = [get_attribute(input_tag, "id") for input_tag in inputs]
     all_have_ids = has_inputs and all(value for value in ids)
-    results.append(report("All inputs have an id", all_have_ids))
+    results.append(report("Todos los input tienen un id", all_have_ids))
 
     names = [get_attribute(input_tag, "name") for input_tag in inputs]
     all_have_names = has_inputs and all(value for value in names)
-    results.append(report("All inputs have a name", all_have_names))
+    results.append(report("Todos los input tienen un name", all_have_names))
 
     labels_valid = has_inputs and all(value and value in label_ids for value in ids)
-    results.append(report("All inputs have associated labels", labels_valid))
+    results.append(report("Todos los input tienen etiquetas asociadas", labels_valid))
 
     types_valid = True
     for input_tag in inputs:
@@ -81,29 +81,29 @@ def validate(path):
         ).lower()
 
         if "email" in identifier and field_type != "email":
-            print("[FAIL] Email field must use type=\"email\".")
+            print("[FAIL] El campo de correo electrónico debe usar type=\"email\".")
             types_valid = False
         if "password" in identifier and field_type != "password":
-            print("[FAIL] Password field must use type=\"password\".")
+            print("[FAIL] El campo de contraseña debe usar type=\"password\".")
             types_valid = False
 
-    results.append(report("Field types are valid", types_valid))
+    results.append(report("Los tipos de campo son válidos", types_valid))
 
     passed = all(results)
-    print("\nValidation passed." if passed else "\nValidation failed.")
+    print("\nValidación exitosa." if passed else "\nValidación fallida.")
     return 0 if passed else 1
 
 
 def main():
     if len(sys.argv) != 2:
-        print(f"Usage: {Path(sys.argv[0]).name} <path-to-jsx>", file=sys.stderr)
+        print(f"Uso: {Path(sys.argv[0]).name} <ruta-al-jsx>", file=sys.stderr)
         return 2
 
     path = Path(sys.argv[1])
     if not path.is_file():
-        print("Form validation\n---------------")
-        print(f"[FAIL] File does not exist: {path}")
-        print("\nValidation failed.")
+        print("Validación del formulario\n-------------------------")
+        print(f"[FAIL] El archivo no existe: {path}")
+        print("\nValidación fallida.")
         return 1
 
     return validate(path)

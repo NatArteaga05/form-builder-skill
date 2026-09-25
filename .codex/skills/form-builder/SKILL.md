@@ -1,43 +1,43 @@
 ---
 name: form-builder
-description: Creates accessible, responsive, and validated web forms based on user requirements. Use this skill when the user asks to create, generate, or implement a form in a frontend application.
+description: Esta skill crea formularios web accesibles, responsivos y validados a partir de los requisitos del usuario. Utiliza esta skill cuando el usuario solicite crear, generar o implementar un formulario en una aplicación frontend.
 ---
 
 # Form-Builder
 
-Create accessible, responsive React forms based on the user's requirements. Follow this workflow whenever this skill is used.
+Esta skill crea formularios React accesibles, responsivos y validados según los requisitos del usuario. Sigue este flujo de trabajo cada vez que se utilice la skill.
 
-## Required workflow
+## Flujo de trabajo obligatorio
 
-1. Analyze the request and identify the form's purpose, requested fields, required fields, data types, and necessary validations. Do not add fields the user did not request unless they are technically necessary. If essential information is missing and cannot reasonably be inferred, ask the user before making significant changes.
+1. Analiza la solicitud e identifica el propósito del formulario, los campos solicitados, los campos obligatorios, los tipos de datos y las validaciones necesarias. No agregues campos que el usuario no haya solicitado, salvo que sean técnicamente necesarios. Si falta información esencial que no se pueda inferir razonablemente, consulta al usuario antes de realizar cambios importantes.
 
-2. Before implementing the form, read all of these references:
+2. Antes de implementar el formulario, consulta todas estas referencias:
    - `references/form-guidelines.md`
    - `references/validation-rules.md`
    - `references/accessibility.md`
 
-3. Read and use these assets as starting points:
+3. Lee y utiliza estos assets como puntos de partida:
    - `assets/form-template.jsx`
    - `assets/form-styles.css`
 
-   Adapt them to the requested form; do not copy them blindly. Preserve their applicable good practices and integrate the result into the existing application rather than copying the assets into it unchanged.
+   Adáptalos al formulario solicitado; no los copies sin revisarlos. Conserva las buenas prácticas aplicables e integra el resultado en la aplicación existente, en lugar de copiar los assets sin cambios.
 
-4. Inspect the existing application and identify the correct component and stylesheet for the form. Preserve existing behavior and modify only what is needed. Do not install external dependencies unless strictly necessary and authorized by the user.
+4. Inspecciona la aplicación existente e identifica el componente y la hoja de estilos adecuados para el formulario. Conserva el comportamiento existente y modifica solo lo necesario. No instales dependencias externas, salvo que sean estrictamente necesarias y el usuario lo autorice.
 
-5. Implement the requested form in React/JSX using semantic HTML. Give each input a unique `id`, a meaningful `name`, and a visible `<label>` associated through matching `htmlFor` and `id` values. Do not use placeholders as label substitutes. Choose appropriate HTML input types, identify required fields, include a submit button, and provide understandable validation feedback near the relevant fields.
+5. Implementa el formulario solicitado con React/JSX y HTML semántico. Asigna a cada input un `id` único, un `name` significativo y un `<label>` visible asociado mediante valores coincidentes en `htmlFor` e `id`. No uses placeholders como sustituto de etiquetas. Elige los tipos de input HTML adecuados, identifica los campos obligatorios, incluye un botón submit y proporciona mensajes de validación comprensibles cerca de los campos correspondientes.
 
-6. Implement the validations required by the requested fields. Prevent submission when the form is invalid, use native HTML validation where appropriate, and add custom validation for constraints that native HTML cannot express (for example, matching password and confirmation values when both are requested). Keep keyboard navigation logical and focus indicators visible. Use ARIA only when native semantics are insufficient. Ensure the layout is responsive.
+6. Implementa las validaciones necesarias para los campos solicitados. Impide el envío cuando el formulario no sea válido, utiliza la validación nativa de HTML cuando corresponda y añade validación personalizada para las restricciones que HTML no pueda expresar (por ejemplo, comprobar que coincidan la contraseña y su confirmación cuando se soliciten ambas). Mantén lógica la navegación con teclado y visibles los indicadores de foco. Utiliza ARIA solo cuando la semántica nativa no sea suficiente. Asegura que el diseño sea responsivo.
 
-7. After generating or modifying the form, run the validator from the repository root, replacing the placeholder with the actual JSX component path:
+7. Después de generar o modificar el formulario, ejecuta el validador desde la raíz del repositorio y sustituye el marcador por la ruta real del componente JSX:
 
    ```sh
    python .codex/skills/form-builder/scripts/validate_form.py <ruta-del-componente-jsx>
    ```
 
-8. Review the validator's output and exit code. A non-zero exit code means validation failed. Read the reported issues, correct the form when possible, and rerun the validator. Repeat until it passes or a problem cannot be resolved safely. Never report success after a failed validation. If the target file does not exist, locate the correct component before continuing; do not treat a missing file as successful validation.
+8. Revisa la salida y el código de salida del validador. Un código distinto de cero significa que la validación falló. Lee los problemas reportados, corrige el formulario cuando sea posible y vuelve a ejecutar el validador. Repite el proceso hasta que pase o hasta que exista un problema que no se pueda resolver de forma segura. Nunca informes que la validación fue exitosa si falló. Si el archivo objetivo no existe, localiza el componente correcto antes de continuar; no consideres que un archivo inexistente pasó la validación.
 
-9. When validation passes, report that the form was created, identify the modified file(s), briefly summarize the implemented validations, and confirm that `validate_form.py` completed successfully. If validation cannot be made to pass safely, explain the blocker and report the failure accurately.
+9. Cuando la validación pase, informa que se creó el formulario, identifica los archivos modificados, resume brevemente las validaciones implementadas y confirma que `validate_form.py` terminó correctamente. Si no se puede lograr que la validación pase de forma segura, explica el impedimento e informa el resultado con precisión.
 
-## Completion criteria
+## Criterios de finalización
 
-A successful run produces a functional form in the application, applies the relevant guidance in `references/`, adapts the starting points in `assets/`, and passes `scripts/validate_form.py`. Finish with a brief summary of the changes.
+Una ejecución exitosa genera un formulario funcional en la aplicación, aplica las pautas pertinentes de `references/`, adapta los puntos de partida de `assets/` y pasa `scripts/validate_form.py`. Finaliza con un breve resumen de los cambios.

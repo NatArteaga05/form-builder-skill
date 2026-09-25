@@ -1,10 +1,10 @@
-# Form accessibility
+# Accesibilidad en formularios
 
-- In React, associate each visible `<label>` with its input using matching `htmlFor` and `id` values.
-- Ensure all controls can be reached and operated using a keyboard, in a logical tab order.
-- Do not communicate errors through color alone; include clear, understandable text.
-- Use semantic HTML form elements, including `<form>`, `<label>`, and appropriate input types.
-- Do not use placeholders as substitutes for visible labels.
-- Keep keyboard focus indicators visible.
-- Use ARIA attributes only when native HTML semantics are insufficient; keep them accurate and synchronized with the UI.
-- Give buttons text that clearly describes their action.
+- En React, asocia cada `<label>` visible con su input mediante valores coincidentes de `htmlFor` e `id`.
+- Asegúrate de que se pueda llegar a todos los controles y utilizarlos con el teclado, siguiendo un orden de tabulación lógico.
+- No comuniques los errores únicamente mediante el color; incluye texto claro y comprensible.
+- Utiliza elementos HTML semánticos para formularios, incluidos `<form>`, `<label>` y los tipos de input adecuados.
+- No utilices placeholders como sustitutos de etiquetas visibles.
+- Mantén visibles los indicadores de foco del teclado.
+- Utiliza atributos ARIA solo cuando la semántica HTML nativa no sea suficiente; mantenlos precisos y sincronizados con la interfaz.
+- Usa en los botones un texto que describa claramente su acción.

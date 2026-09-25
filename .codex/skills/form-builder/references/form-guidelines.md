@@ -1,10 +1,10 @@
-# Form guidelines
+# Pautas para formularios
 
-- Give every field a visible label that clearly describes the information requested.
-- Choose the appropriate HTML input type for each value, such as `text`, `email`, `password`, `number`, or `date`.
-- Group related fields and arrange them in a clear, predictable order.
-- Include a submit button with a clear action label.
-- Identify required fields in a way that is clear to users and consistent with the form's validation.
-- Show validation messages close to the field they refer to.
-- Keep instructions and wording concise so the form is easy to understand.
-- Use a responsive layout that works on desktop and mobile devices.
+- Proporciona a cada campo una etiqueta visible que describa claramente la información solicitada.
+- Elige el tipo de input HTML adecuado para cada valor, como `text`, `email`, `password`, `number` o `date`.
+- Agrupa los campos relacionados y organízalos en un orden claro y predecible.
+- Incluye un botón submit con una etiqueta de acción clara.
+- Identifica los campos obligatorios de una forma clara para los usuarios y coherente con la validación del formulario.
+- Muestra los mensajes de validación cerca del campo al que se refieren.
+- Mantén las instrucciones y el texto concisos para que el formulario sea fácil de entender.
+- Utiliza un diseño responsivo que funcione en computadoras y dispositivos móviles.
