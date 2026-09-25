@@ -1,39 +1,43 @@
 # Form-Builder Agent Skill
 
-## Overview
+## Descripción
 
-Form-Builder is an Agent Skill designed to generate accessible, responsive, and validated React forms from user requirements. This repository also contains a small React + Vite application used to demonstrate the skill. The current demo displays a registration form in the Form Preview area.
+Form-Builder es una Agent Skill creada para generar formularios React accesibles, responsivos y validados a partir de los requisitos del usuario. El repositorio también contiene una aplicación React + Vite para demostrar el funcionamiento de la skill.
 
-## Features
+La aplicación actual muestra un formulario de registro en la sección Form Preview. En `docs/evidencias/` se conservan capturas del estado inicial vacío y del formulario generado.
 
-- Generates React forms from user requirements.
-- Provides practical form validation rules and accessibility guidelines.
-- Includes reusable JSX and CSS form assets as starting points.
-- Runs `validate_form.py` to check form structure and common field issues.
-- Detects invalid forms, including missing input identifiers, names, labels, and incorrect email or password types.
+## Características
 
-## Requirements
+- Generación de formularios React a partir de solicitudes del usuario.
+- Reglas para validar campos y datos.
+- Pautas de accesibilidad para formularios.
+- Assets JSX y CSS reutilizables como base para nuevos formularios.
+- Validación automática mediante `validate_form.py`.
+- Detección de errores comunes, como inputs sin `id`, `name` o label asociado, y tipos incorrectos en campos de correo o contraseña.
 
-- Node.js and npm to install and run the demo application.
-- Python 3 to run the validator.
-- Codex with Agent Skills support to invoke Form-Builder.
+## Requisitos
 
-## Installation
+- Node.js
+- npm
+- Python 3
+- Codex con soporte para Agent Skills
 
-Clone the repository and start the demo:
+## Instalación
+
+Clona el repositorio, instala sus dependencias e inicia la aplicación de demostración:
 
 ```sh
-git clone <repository-url>
+git clone <URL-DEL-REPOSITORIO>
 cd form-builder-skill
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite in your browser.
+Abre en el navegador la URL local que muestre Vite.
 
-## Skill Structure
+## Estructura de la skill
 
-The skill is located at `.codex/skills/form-builder/`:
+La skill está ubicada en `.codex/skills/form-builder/`:
 
 ```text
 .codex/skills/form-builder/
@@ -51,98 +55,140 @@ The skill is located at `.codex/skills/form-builder/`:
     └── invalid-form.jsx
 ```
 
-- `SKILL.md` defines the required form-generation and validation workflow.
-- `scripts/validate_form.py` performs basic deterministic checks on a JSX component containing a form.
-- `assets/form-template.jsx` and `assets/form-styles.css` provide adaptable React and CSS starting points.
-- `references/form-guidelines.md` describes general form design practices.
-- `references/validation-rules.md` documents field and submission validation rules.
-- `references/accessibility.md` documents accessible form patterns.
-- `tests/invalid-form.jsx` is an intentionally invalid fixture for demonstrating validator errors.
+- `SKILL.md`: define el flujo de trabajo obligatorio de Form-Builder.
+- `scripts/validate_form.py`: realiza comprobaciones deterministas básicas sobre el formulario de un componente JSX.
+- `assets/form-template.jsx`: plantilla React genérica con un campo etiquetado, espacio para errores y botón submit.
+- `assets/form-styles.css`: estilos CSS reutilizables para formularios, incluidos estados de foco y diseño responsivo.
+- `references/form-guidelines.md`: reúne pautas generales de diseño de formularios.
+- `references/validation-rules.md`: documenta reglas de campos, validación y envío.
+- `references/accessibility.md`: documenta prácticas de accesibilidad para formularios.
+- `tests/invalid-form.jsx`: fixture intencionalmente incorrecto para demostrar la detección de errores.
 
-The demonstration application is built with React and Vite. Its entry point is `src/main.jsx`, the page is `src/App.jsx`, and `src/components/FormPreview.jsx` contains the current registration form. Styles are in `src/styles.css`.
+La aplicación React + Vite tiene su punto de entrada en `src/main.jsx`, la página en `src/App.jsx`, el componente de vista previa en `src/components/FormPreview.jsx` y los estilos en `src/styles.css`.
 
-## How the Skill Works
+## Cómo funciona
 
 ```text
-User request
+Solicitud del usuario
 → Form-Builder
-→ Read references
-→ Adapt assets
-→ Generate or modify React form
-→ Run validate_form.py
-→ Fix validation problems if necessary
-→ Return validated result
+→ Consulta references
+→ Utiliza assets
+→ Genera o modifica el formulario React
+→ Ejecuta validate_form.py
+→ Corrige problemas si existen
+→ Entrega el formulario validado
 ```
 
-The references, assets, and script are working parts of this workflow: the references guide implementation, the assets provide adaptable starting points, and the validator checks the resulting JSX. They are not decorative files.
+Los archivos de `references/`, `assets/` y `scripts/` se utilizan realmente durante este flujo: las referencias guían la implementación, los assets proporcionan una base adaptable y el script comprueba el resultado. No son archivos decorativos.
 
-## Usage
+## Uso
 
-In Codex with Agent Skills support, explicitly invoke the skill using `$form-builder` and describe the form you want:
+En Codex con soporte para Agent Skills, invoca la skill explícitamente con `$form-builder` y describe el formulario solicitado. Por ejemplo:
 
 ```text
 $form-builder
 
-Create a registration form in the Form Preview section with:
+Crea un formulario de registro en la sección Form Preview con:
 
-- Full name
-- Email
-- Password
-- Confirm password
+- Nombre completo
+- Correo electrónico
+- Contraseña
+- Confirmación de contraseña
 
-All fields are required.
-Validate the email format.
-The password must contain at least 8 characters.
-Confirm password must match the password.
+Todos los campos son obligatorios.
+Valida el formato del correo electrónico.
+La contraseña debe tener un mínimo de 8 caracteres.
+La confirmación debe coincidir con la contraseña.
 
-Implement it in the existing React application.
+Impleméntalo en la aplicación React existente.
 ```
 
-## Expected Result
+## Resultado esperado
 
-The requested result is a registration form inside Form Preview with full name, email, password, and confirm password fields, along with the specified required-field, email-format, minimum-password-length, and password-match validation. The skill should run `validate_form.py` against the component and finish with successful validation.
+Form-Builder debe generar el formulario solicitado dentro de la aplicación, con los cuatro campos y sus validaciones. Después debe ejecutar `validate_form.py` sobre el componente JSX y corregir los problemas detectados hasta que la validación pase o exista un impedimento que no pueda resolverse de forma segura.
 
-The current checked-in demo already contains this registration example in `src/components/FormPreview.jsx`, including inline validation feedback and a success message after valid submission.
+La versión actual de `src/components/FormPreview.jsx` ya contiene el ejemplo de registro, con validación de campos obligatorios, formato de correo, longitud mínima de contraseña y coincidencia de contraseñas, además de mensajes de error y confirmación.
 
-## Validation
+## Prueba exitosa
 
-From the repository root, manually validate the current form (or the generated form in that component):
+Desde la raíz del repositorio, valida el formulario actual:
 
 ```sh
 python .codex/skills/form-builder/scripts/validate_form.py src/components/FormPreview.jsx
 ```
 
-The script prints individual checks; a successful run ends with:
+La ejecución correcta muestra comprobaciones `[PASS]` y termina con:
 
 ```text
-Validation passed.
+Validación exitosa.
 ```
 
-## Error Test
+## Prueba de error
 
-`.codex/skills/form-builder/tests/invalid-form.jsx` is intentionally invalid and exists to demonstrate error handling. Run it with:
+`.codex/skills/form-builder/tests/invalid-form.jsx` es un formulario incorrecto creado intencionalmente para comprobar el manejo de errores. Ejecuta:
 
 ```sh
 python .codex/skills/form-builder/scripts/validate_form.py .codex/skills/form-builder/tests/invalid-form.jsx
 ```
 
-This test is expected to produce `[FAIL]` results and end with:
+El script debe detectar los errores, mostrar resultados `[FAIL]` y terminar con:
 
 ```text
-Validation failed.
+Validación fallida.
 ```
 
-That failure is intentional and demonstrates that the validator detects invalid forms; it does not indicate a problem with the working demo.
+Este fallo es intencional y demuestra que el validador detecta formularios incorrectos; no representa un error en la aplicación.
 
-## Demo
+## Demostración
 
-1. Start the application with `npm run dev`. The current checked-in starting state already shows the registration form in Form Preview; an empty preview is the state before a form is generated.
-2. In Codex, invoke `$form-builder` and request the registration form using the example above.
-3. Show that Codex reads and follows the skill workflow, references, and assets.
-4. Show the generated form in the browser.
-5. Run the validator against the generated form and show `Validation passed.`
-6. Run it against `tests/invalid-form.jsx` and show the expected `Validation failed.` result.
+1. Muestra el estado inicial vacío de Form Preview usando la evidencia `01-app-inicial.png`. La aplicación actual ya contiene el formulario generado, por lo que esta captura documenta el estado anterior a su generación.
+2. Invoca `$form-builder` desde Codex.
+3. Solicita el formulario de registro del ejemplo.
+4. Muestra cómo Codex utiliza la skill, sus `references/` y sus `assets/`.
+5. Muestra el formulario generado en el navegador.
+6. Ejecuta la prueba exitosa sobre `src/components/FormPreview.jsx`.
+7. Ejecuta la prueba de error sobre `tests/invalid-form.jsx`.
 
-## Project Purpose
+## Evidencias
 
-This educational Agent Skill project demonstrates an end-to-end workflow using `SKILL.md`, scripts, assets, references, a working React example, and intentional error handling.
+Las siguientes capturas muestran las etapas principales de la demostración, en orden:
+
+### Estado inicial de la aplicación
+
+La aplicación muestra Form Preview vacío antes de generar el formulario.
+
+![Estado inicial de la aplicación](docs/evidencias/01-app-inicial.png)
+
+### Estructura de la Agent Skill
+
+La captura muestra los archivos principales de la skill: `SKILL.md`, `scripts`, `assets` y `references`.
+
+![Estructura de Form-Builder](docs/evidencias/04-skill-structure.png)
+
+### Ejecución de Form-Builder en Codex
+
+Se muestra la invocación explícita de la skill mediante `$form-builder` y su uso por parte de Codex.
+
+![Ejecución de Form-Builder en Codex](docs/evidencias/05-form-builder-execution.png)
+
+### Validación exitosa
+
+El validador se ejecuta sobre el formulario generado y termina con «Validación exitosa.»
+
+![Validación exitosa del formulario](docs/evidencias/06-validation-passed.png)
+
+### Formulario generado
+
+El formulario de registro aparece en Form Preview dentro de la aplicación.
+
+![Formulario de registro generado](docs/evidencias/07-generated-form.png)
+
+### Detección de un formulario inválido
+
+El validador muestra resultados `[FAIL]` para el fixture incorrecto y termina con «Validación fallida.» Este error es intencional.
+
+![Detección del formulario inválido](docs/evidencias/08-invalid-form-detected.png)
+
+## Propósito del proyecto
+
+Este proyecto educativo demuestra un flujo completo de Agent Skill mediante `SKILL.md`, `scripts`, `assets`, `references`, una aplicación funcional y manejo de errores.
